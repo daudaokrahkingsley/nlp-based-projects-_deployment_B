@@ -1,0 +1,28 @@
+from huggingface_hub import login
+
+# Log in with your Hugging Face token
+# login(token="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")
+
+
+
+from diffusers import StableDiffusionPipeline
+import torch
+import matplotlib.pyplot as plt
+
+# Load another version of the Stable Diffusion model
+pipe = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5")
+
+# Move the model to GPU for faster inference (if available)
+pipe.to("cuda")
+
+# Generate an image from a text prompt
+prompt = "Cat"
+image = pipe(prompt).images[0]
+
+# Display the generated image
+plt.imshow(image)
+plt.axis("off")
+plt.show()
+
+# Optionally, save the generated image
+image.save("generated_image.png")
