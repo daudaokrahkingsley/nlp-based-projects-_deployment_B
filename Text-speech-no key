@@ -1,0 +1,25 @@
+from diffusers import StableDiffusionPipeline
+import torch
+import matplotlib.pyplot as plt
+
+# Load Stable Diffusion model (no API key required)
+# The model ID has been changed to a publicly available model.
+pipe = StableDiffusionPipeline.from_pretrained("runwayml/stable-diffusion-v1-5", 
+                                               torch_dtype=torch.float16)
+
+# Use GPU if available
+pipe.to("cuda")
+
+# Define the text prompt
+prompt = "PIG"
+
+# Generate an image from the text prompt
+image = pipe(prompt).images[0]
+
+# Display the generated image
+plt.imshow(image)
+plt.axis("off")
+plt.show()
+
+# Optionally save the image
+image.save("generated_image.png")
